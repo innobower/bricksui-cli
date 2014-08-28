@@ -1,0 +1,29 @@
+{
+  "name": "bricks-ui",
+  "version": "0.2.2",
+  "description": "Include BricksUI into an ember-cli application.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "bower install"
+  },
+  "keywords": [
+    "ember-addon",
+    "ember",
+    "ember-cli"
+  ],
+  "author": {
+    "name": "innobricks"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/innobower/bricksui-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/innobower/bricksui-cli/issues"
+  },
+  "dependencies": {
+    "walk-sync": "^0.1.2"
+  },
+  "homepage": "https://github.com/innobower/bricksui-cli"
+}

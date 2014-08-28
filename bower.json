@@ -1,0 +1,6 @@
+{
+  "name": "bricks-ui",
+  "dependencies": {
+    "bricksui": "*"
+  }
+}
