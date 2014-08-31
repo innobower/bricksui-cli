@@ -5,9 +5,9 @@
 
 var path = require('path');
 var fs = require('fs');
-var walkSync = require('walk-sync');
 var vendorPath='vendor/bricksui';
-
+var pickFiles = require('broccoli-static-compiler');
+var mergeTrees = require('broccoli-merge-trees');
 
 
 function EmberCLIBricksUi(project) {
@@ -44,29 +44,32 @@ function unwatchedTree(dir) {
   };
 }
 
-/**
- * 复制assets内容
- * @param app
- * @param assets
- */
-function copyAssetsRecursive(app, assets) {
-  var base = path.join(__dirname, assets),
-    paths = walkSync(base);
-
-  paths.forEach(function (filePath) {
-    var dirName = 'assets/'+path.dirname(filePath);
-
-    if (!isFile(filePath)) return;
-    app.import(path.join(assets, filePath), { destDir: dirName});
-  });
-}
-
 EmberCLIBricksUi.prototype.treeFor = function treeFor(name) {
   var treePath = path.join('node_modules', 'bricks-ui', name);
   if (fs.existsSync(treePath)) {
     return unwatchedTree(treePath);
   }
 };
+
+/**
+ * Ember Cli Hook For Vendor
+ * @param type
+ * @param workingTree
+ */
+EmberCLIBricksUi.prototype.postprocessTree = function postprocessTree(type, workingTree) {
+  var assetsPath = path.join(__dirname, 'vendor', 'bricksui', 'assets');
+  //hard code to destDir to assets/assets.
+  return mergeTrees([
+      workingTree,
+      pickFiles(assetsPath, {
+        srcDir: '/',
+        files: ['**/*.*'],
+        destDir: '/assets/assets'
+      })
+    ]
+  );
+};
+
 
 EmberCLIBricksUi.prototype.included = function included(app) {
   var emberCLIVersion = app.project.emberCLIVersion();
@@ -80,9 +83,6 @@ EmberCLIBricksUi.prototype.included = function included(app) {
   //import javascript files
   app.import(concatPath('bricksui.vendor.js'));
   app.import(concatPath('bricksui.js'));
-
-  //import vendor files
-  copyAssetsRecursive(app,vendorPath);
 };
 
 module.exports = EmberCLIBricksUi;

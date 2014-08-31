@@ -1,6 +1,6 @@
 {
   "name": "bricks-ui",
-  "version": "0.2.2",
+  "version": "0.2.4",
   "description": "Include BricksUI into an ember-cli application.",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -23,7 +23,8 @@
     "url": "https://github.com/innobower/bricksui-cli/issues"
   },
   "dependencies": {
-    "walk-sync": "^0.1.2"
+    "broccoli-merge-trees": "^0.1.4",
+    "broccoli-static-compiler": "^0.1.4"
   },
   "homepage": "https://github.com/innobower/bricksui-cli"
 }
